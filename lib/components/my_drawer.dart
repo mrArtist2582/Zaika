@@ -15,7 +15,7 @@ class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       child: Column(
         children: [
           // App logo
@@ -35,17 +35,17 @@ class MyDrawer extends StatelessWidget {
           ),
           // Home list tile
           MyDrawerTile(
-            text: "H O M E",
-            icon: Icons.home,
-            onTap: () { Navigator.pop(context);
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>  HomePage(),
-                ),
-              );
-            }
-          ),
+              text: "H O M E",
+              icon: Icons.home,
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HomePage(),
+                  ),
+                );
+              }),
           // Settings list tile
           MyDrawerTile(
             text: "S E T T I N G",

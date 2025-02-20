@@ -27,7 +27,7 @@ class AuthService {
       return null;
     }
   }
-
+  
   // 🔹 Sign out from Google
   Future<void> signOutGoogle() async {
     try {
