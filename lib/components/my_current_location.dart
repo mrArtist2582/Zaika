@@ -22,6 +22,10 @@ class MyCurrentLocation extends StatelessWidget {
             decoration: const InputDecoration(
               hintText: "Enter Address..",
             ),
+            onChanged: (value) {
+              // Dynamically update the address as the user types
+              restaurant.updateDeliveryAddress(value.trim());
+            },
           ),
           actions: [
             // Cancel button
@@ -38,7 +42,7 @@ class MyCurrentLocation extends StatelessWidget {
                 String newAddress = textController.text.trim();
 
                 if (newAddress.isNotEmpty) {
-                  restaurant.updateDeliveryAddress(newAddress); // Update address
+                  restaurant.updateDeliveryAddress(newAddress);
                 }
 
                 Navigator.pop(context);
@@ -61,9 +65,11 @@ class MyCurrentLocation extends StatelessWidget {
         children: [
           Row(
             children: [
-               Icon(Icons.location_on , color: Theme.of(context).colorScheme.inversePrimary),
-               SizedBox(width: 5,),
-          
+              Icon(Icons.location_on,
+                  color: Theme.of(context).colorScheme.inversePrimary),
+              SizedBox(
+                width: 5,
+              ),
               Text(
                 "Deliver now",
                 style: TextStyle(
@@ -72,13 +78,13 @@ class MyCurrentLocation extends StatelessWidget {
               ),
             ],
           ),
-          
           GestureDetector(
             onTap: () => openLocationSearchBox(context),
             child: Row(
-            
               children: [
-                SizedBox(width: 5,),
+                SizedBox(
+                  width: 5,
+                ),
                 // Consumer to update UI when address changes
                 Consumer<Restauarant>(
                   builder: (context, restaurant, child) => Text(

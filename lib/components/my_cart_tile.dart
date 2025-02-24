@@ -42,7 +42,7 @@ class MyCartTile extends StatelessWidget {
                   children: [
                     // food name
                     Padding(
-                      padding: const EdgeInsets.only(left: 12, top: 10),
+                      padding: const EdgeInsets.only(left: 1, top: 10,),
                       child: Text(cartItem.food.name),
                     ),
                     // food price

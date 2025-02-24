@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/pages/home_page.dart';
+//import 'package:food_delivery_app/pages/home_page.dart';
+import 'package:food_delivery_app/pages/profile_creation_page.dart';
 import 'package:food_delivery_app/services/auth/login_or_register.dart';
 
 class AuthGate extends StatelessWidget {
@@ -15,7 +16,7 @@ class AuthGate extends StatelessWidget {
          builder: (context ,snapshot) {
           // user is logged in
           if(snapshot.hasData){
-            return  const HomePage();
+            return  const ProfileCreationPage();
           }
         // user is not logged in
         else{

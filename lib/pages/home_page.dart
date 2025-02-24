@@ -10,8 +10,11 @@ import 'package:food_delivery_app/models/food.dart';
 import 'package:food_delivery_app/models/restauarant.dart';
 import 'package:food_delivery_app/pages/cart_page.dart';
 import 'package:food_delivery_app/pages/food_page.dart';
+import 'package:food_delivery_app/pages/profile_page.dart';
 import 'package:food_delivery_app/pages/settings_page.dart';
+import 'package:food_delivery_app/pages/profile_creation_page.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,14 +23,31 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   int _index = 0;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: FoodCatagory.values.length, vsync: this);
+    _tabController =
+        TabController(length: FoodCatagory.values.length, vsync: this);
+    _checkFirstTimeUser();
+  }
+
+  Future<void> _checkFirstTimeUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool? isProfileCreated = prefs.getBool('isProfileCreated');
+
+    if (isProfileCreated == null || !isProfileCreated) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => ProfileCreationPage()),
+        );
+      });
+    }
   }
 
   @override
@@ -39,6 +59,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   final List<Widget> _pages = [
     HomeContent(),
     CartPage(),
+    ProfilePage(),
     SettingsPage(),
   ];
 
@@ -53,21 +74,22 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         items: [
           Icon(Icons.home, color: Theme.of(context).colorScheme.inversePrimary),
           Consumer<Restauarant>(
-            builder: (context, restauarant, child) {
-              final cartItemCount = restauarant.cart.length;
-              // Show badge only if cart is not empty
-              if (cartItemCount > 0) {
-                return Badge(
-                  label: Text(cartItemCount.toString()),
-                  child: Icon(Icons.shopping_cart, color: Theme.of(context).colorScheme.inversePrimary),
-                );
-              } else {
-                // Return just the icon if cart is empty
-                return Icon(Icons.shopping_cart, color: Theme.of(context).colorScheme.inversePrimary);
-              }
+            builder: (context, restaurant, child) {
+              final cartItemCount = restaurant.cart.length;
+              return cartItemCount > 0
+                  ? Badge(
+                      label: Text(cartItemCount.toString()),
+                      child: Icon(Icons.shopping_cart,
+                          color: Theme.of(context).colorScheme.inversePrimary),
+                    )
+                  : Icon(Icons.shopping_cart,
+                      color: Theme.of(context).colorScheme.inversePrimary);
             },
           ),
-          Icon(Icons.settings, color: Theme.of(context).colorScheme.inversePrimary),
+          Icon(Icons.person,
+              color: Theme.of(context).colorScheme.inversePrimary),
+          Icon(Icons.settings,
+              color: Theme.of(context).colorScheme.inversePrimary),
         ],
         index: _index,
         onTap: (index) {
@@ -108,10 +130,12 @@ class HomeContent extends StatelessWidget {
           ),
         ],
         body: Consumer<Restauarant>(
-          builder: (context, restauarant, child) => TabBarView(
+          builder: (context, restaurant, child) => TabBarView(
             controller: DefaultTabController.of(context),
             children: FoodCatagory.values.map((category) {
-              List<Food> categoryMenu = restauarant.menu.where((food) => food.catagory == category).toList();
+              List<Food> categoryMenu = restaurant.menu
+                  .where((food) => food.catagory == category)
+                  .toList();
               return ListView.builder(
                 itemCount: categoryMenu.length,
                 physics: const NeverScrollableScrollPhysics(),
