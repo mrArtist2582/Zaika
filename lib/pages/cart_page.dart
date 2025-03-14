@@ -24,7 +24,7 @@ class CartPage extends StatelessWidget {
         appBar: AppBar(
           title: const Text("Cart"),
           centerTitle: true,
-          backgroundColor: Colors.transparent,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           foregroundColor: Theme.of(context).colorScheme.inversePrimary,
           actions: [
             // clear all cart button
@@ -73,14 +73,19 @@ class CartPage extends StatelessWidget {
                           ),
                         )
                       : Expanded(
-                          child: ListView.builder(
-                              itemCount: userCart.length,
-                              itemBuilder: (context, index) {
-                                // get individual cart item
-                                final cartItem = userCart[index];
-                                // return cart title UI
-                                return MyCartTile(cartItem: cartItem);
-                              }),
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: ListView.builder(
+                                itemCount: userCart.length,
+                                itemBuilder: (context, index) {
+                                  // get individual cart item
+                                  final cartItem = userCart[index];
+                                  // return cart title UI
+                            
+                                 
+                                  return MyCartTile(cartItem: cartItem);
+                                }),
+                          ),
                         ),
                 ],
               ),

@@ -58,8 +58,8 @@ class _ContactState extends State<Contact> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Lottie.asset('assets/submitted.json', repeat: false,
-                  height: 400, width: 400),
+                  Lottie.asset('assets/submitted.json',
+                      repeat: false, height: 400, width: 400),
                   SizedBox(height: 10),
                   Text(
                     "Submission Successful!",
@@ -84,9 +84,15 @@ class _ContactState extends State<Contact> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Contact", style: TextStyle(color: Colors.grey)),
-        backgroundColor: Colors.transparent,
+        title: Text("Contact",
+            style: TextStyle(
+                color: Color.fromRGBO(66, 66, 66, 1),
+                fontWeight: FontWeight.bold)),
+        backgroundColor: Theme.of(context).colorScheme.primary,
         centerTitle: true,
+        leading: IconButton(onPressed: (){
+          Navigator.pop(context);
+        }, icon: Icon(Icons.arrow_back_ios, color: Theme.of(context).colorScheme.inversePrimary,)),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -107,12 +113,10 @@ class _ContactState extends State<Contact> {
                   child: GestureDetector(
                     onTap: _isSubmitting ? null : _submitForm,
                     child: Container(
-                      width: double.infinity, 
+                      width: double.infinity,
                       padding: EdgeInsets.symmetric(vertical: 15),
                       decoration: BoxDecoration(
-                        color: _isSubmitting
-                            ? Colors.grey
-                            : Colors.blue, 
+                        color: _isSubmitting ? Colors.grey : Colors.blue,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       alignment: Alignment.center,

@@ -14,10 +14,10 @@ class MyCartTile extends StatelessWidget {
     return Consumer<Restauarant>(
       builder: (context, restauarant, child) => Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
+          color:Theme.of(context).colorScheme.onBackground,
           borderRadius: BorderRadius.circular(12),
         ),
-        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+        margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
         child: Column(
           children: [
             Row(
@@ -42,11 +42,14 @@ class MyCartTile extends StatelessWidget {
                   children: [
                     // food name
                     Padding(
-                      padding: const EdgeInsets.only(left: 1, top: 10,),
-                      child: Text(cartItem.food.name),
+                      padding: const EdgeInsets.only(left: 10, top: 10,),
+                      child: Text(cartItem.food.name, style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500
+                      ),),
                     ),
                     // food price
-                    Container(margin: EdgeInsets.only(left:10, top: 2),
+                    Container(margin: EdgeInsets.only(left:15, top: 5),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 5),
                       decoration: BoxDecoration(

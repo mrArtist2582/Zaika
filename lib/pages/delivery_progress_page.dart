@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/components/my_receipt_page.dart';
 import 'package:food_delivery_app/models/restauarant.dart';
+import 'package:food_delivery_app/pages/home_page.dart';
 import 'package:food_delivery_app/services/database/firestore.dart';
 import 'package:provider/provider.dart';
 
@@ -47,6 +48,9 @@ class _DeliveryProgressPageState extends State<DeliveryProgressPage> {
         ),),
         centerTitle: true,
         backgroundColor: Colors.transparent,
+        leading: IconButton(onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context) =>  HomePage()));
+        }, icon: Icon(Icons.arrow_back),)
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
