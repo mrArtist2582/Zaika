@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/components/my_button.dart';
 import 'package:food_delivery_app/components/my_text_field.dart';
-// ignore: unused_import
 import 'package:food_delivery_app/pages/home_page.dart';
+import 'package:food_delivery_app/pages/login_page.dart';
 import 'package:food_delivery_app/pages/profile_creation_page.dart';
 import 'package:food_delivery_app/services/auth/auth_service.dart';
 
@@ -22,6 +22,24 @@ class _RegisterPageState extends State<RegisterPage> {
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
 
+  @override
+  void initState() {
+    super.initState();
+    checkUserStatus();
+  }
+
+  // Check if user is already logged in and redirect to HomePage
+  void checkUserStatus() async {
+    final user = AuthService().getCurrentUser(); // Implement in AuthService
+    if (user != null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+    }
+  }
+
+  // Registration Function
   void register() async {
     final AuthService authService = AuthService();
 
@@ -33,9 +51,12 @@ class _RegisterPageState extends State<RegisterPage> {
         );
 
         if (!mounted) return;
-        Navigator.push(
+        
+        // Navigate to profile creation but remove RegisterPage from stack
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => ProfileCreationPage()),
+          (route) => false,
         );
       } catch (e) {
         if (!mounted) return;
@@ -146,7 +167,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 const SizedBox(height: 50),
-                MyButton(onTap: register, text: "Sign Up"), // Fixed call
+                MyButton(onTap: register, text: "Sign Up"),
                 const SizedBox(height: 25),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -159,7 +180,12 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     const SizedBox(width: 4),
                     GestureDetector(
-                      onTap: widget.onTap,
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginPage(onTap: () {  },)),
+                        );
+                      },
                       child: Text(
                         'Login now...',
                         style: TextStyle(

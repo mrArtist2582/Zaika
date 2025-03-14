@@ -486,7 +486,7 @@ class Restauarant extends ChangeNotifier {
 
   // delivery address
 
-  String _deliveryAddress = '46, Radhe Residancy, khambhat';
+  String _deliveryAddress = '';
   /*  
 
           Getter

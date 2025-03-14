@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/components/my_button.dart' show MyButton;
+import 'package:food_delivery_app/models/restauarant.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -32,6 +34,7 @@ class _ProfilePageState extends State<ProfilePage> {
     });
   }
 
+  // ignore: unused_element
   Future<void> _updateProfile(String newUsername, String newEmail,
       String newContact, String newAddress, String newAvatar) async {
     if (newUsername.isEmpty ||
@@ -95,19 +98,21 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CircleAvatar(
-                radius: 50, backgroundImage: AssetImage(selectedAvatar)),
-            const SizedBox(height: 20),
-            _buildProfileContainer("Username", username),
-            _buildProfileContainer("Email", email),
-            _buildProfileContainer("Contact", contact),
-            _buildProfileContainer("Address", address),
-            const SizedBox(height: 20),
-            _buildEditButton(),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                  radius: 50, backgroundImage: AssetImage(selectedAvatar)),
+              const SizedBox(height: 20),
+              _buildProfileContainer("Username", username),
+              _buildProfileContainer("Email", email),
+              _buildProfileContainer("Contact", contact),
+              _buildProfileContainer("Address", address),
+              const SizedBox(height: 20),
+              _buildEditButton(),
+            ],
+          ),
         ),
       ),
     );
@@ -201,6 +206,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                 addressController.text,
                                 selectedAvatar,
                               );
+                              context.read<Restauarant>().updateDeliveryAddress(
+                                  addressController.text);
                             },
                             text: "Save Changes")),
                   ],
