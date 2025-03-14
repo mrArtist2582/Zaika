@@ -1,7 +1,9 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:food_delivery_app/models/restauarant.dart';
 import 'package:food_delivery_app/pages/home_page.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:lottie/lottie.dart';
 
@@ -50,6 +52,9 @@ class _ProfileCreationPageState extends State<ProfileCreationPage> {
     await prefs.setString('avatar', _avatars[_selectedAvatarIndex]);
     await prefs.setBool('isProfileCreated', true);
 
+
+    context.read<Restauarant>().updateDeliveryAddress(_addressController.text);
+
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -73,7 +78,7 @@ class _ProfileCreationPageState extends State<ProfileCreationPage> {
               const SizedBox(height: 10),
               const Text(
                 "Profile Created Successfully!",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
               ),
             ],
           ),

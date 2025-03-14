@@ -15,17 +15,13 @@ class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Colors.amber[600],
       child: Column(
         children: [
           // App logo
           Padding(
             padding: const EdgeInsets.only(top: 100),
-            child: Icon(
-              Icons.lock_open_rounded,
-              size: 80,
-              color: Theme.of(context).colorScheme.inversePrimary,
-            ),
+            child:   Image.asset('assets/kd.png', height: 150, width: 150)
           ),
           Padding(
             padding: const EdgeInsets.all(25),
@@ -33,6 +29,7 @@ class MyDrawer extends StatelessWidget {
               color: Theme.of(context).colorScheme.inversePrimary,
             ),
           ),
+      SizedBox(height: 40,),
           // Home list tile
           MyDrawerTile(
               text: "H O M E",

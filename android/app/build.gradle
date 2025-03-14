@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-      namespace 'com.example.food_delivery_app'
+    namespace 'com.example.food_delivery_app'
     namespace 'com.simform.flutter_credit_card'
     compileSdkVersion 33
     namespace = "com.example.food_delivery_app"  // Ensure the namespace is correctly set here
