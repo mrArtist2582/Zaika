@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/components/my_receipt_page.dart';
 import 'package:food_delivery_app/models/restauarant.dart';
-import 'package:food_delivery_app/pages/home_page.dart';
+import 'package:food_delivery_app/pages/cart_page.dart';
 import 'package:food_delivery_app/services/database/firestore.dart';
 import 'package:provider/provider.dart';
 
@@ -49,8 +49,15 @@ class _DeliveryProgressPageState extends State<DeliveryProgressPage> {
         centerTitle: true,
         backgroundColor: Colors.transparent,
         leading: IconButton(onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context) =>  HomePage()));
-        }, icon: Icon(Icons.arrow_back),)
+             Provider.of<Restauarant>(context, listen: false).clearCart();
+
+                  // Navigate to HomePage and remove previous pages from stack
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => CartPage()),
+                    (route) => false,
+                  );
+        }, icon: Icon(Icons.arrow_back_ios),)
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
