@@ -605,7 +605,7 @@ class Restauarant extends ChangeNotifier {
 
   receipt.writeln(formattedDate);
   receipt.writeln();
-  receipt.writeln('-------------------------------------------');
+   Divider();
 
   for (final cartItem in _cart) {
     receipt.writeln(
@@ -616,7 +616,7 @@ class Restauarant extends ChangeNotifier {
     receipt.writeln();
   }
 
-  receipt.writeln('---------------------------------------------');
+ Divider();
   receipt.writeln();
 
   // Calculate total price
@@ -627,7 +627,7 @@ class Restauarant extends ChangeNotifier {
   receipt.writeln("Total Items  : ${getTotalItemCount()}");
   receipt.writeln("Total Price  : ${_formatPrice(totalPrice)}");
   receipt.writeln("GST (5%)     : ${_formatPrice(gst)}");
-  receipt.writeln("--------------------------------------------");
+  Divider();
   receipt.writeln("Final Amount : ${_formatPrice(finalAmount)}");
   receipt.writeln();
   receipt.writeln("Delivered To : $deliveryAddress");
