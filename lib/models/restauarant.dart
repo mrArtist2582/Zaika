@@ -595,48 +595,58 @@ class Restauarant extends ChangeNotifier {
 
   // genrate receipt
   String displayCartReceipt() {
-    final receipt = StringBuffer();
-    receipt.writeln("Here your Receipt..");
-    receipt.writeln();
+  final receipt = StringBuffer();
+  receipt.writeln("Here your Receipt..");
+  receipt.writeln();
 
-    // format the date to include up to seconds only
-    String formattedDate =
-        DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+  // Format the date to include up to seconds only
+  String formattedDate =
+      DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
 
-    receipt.writeln(formattedDate);
-    receipt.writeln();
-    receipt.writeln('----------');
+  receipt.writeln(formattedDate);
+  receipt.writeln();
+  receipt.writeln('-------------------------------------------------------------');
 
-    for (final cartItem in _cart) {
-      receipt.writeln(
-          '${cartItem.quantity} x ${cartItem.food.name} - ${_formatPrice(cartItem.food.price)}');
-      if (cartItem.selectedAddons.isEmpty) {
-        receipt
-            .writeln("   Add-ons : ${_formateAddons(cartItem.selectedAddons)}");
-      }
-      receipt.writeln();
+  for (final cartItem in _cart) {
+    receipt.writeln(
+        '${cartItem.quantity} x ${cartItem.food.name} - ${_formatPrice(cartItem.food.price)}');
+    if (cartItem.selectedAddons.isNotEmpty) {
+      receipt.writeln("   Add-ons : ${_formateAddons(cartItem.selectedAddons)}");
     }
-    receipt.writeln('----------');
     receipt.writeln();
-    receipt.writeln("Total Items :${getTotalItemCount()}");
-    receipt.writeln("Total Price :${_formatPrice(getTotalPrice())}");
-    receipt.writeln();
-    receipt.writeln("Delivered To : $deliveryAddress");
-
-    return receipt.toString();
   }
 
-  //  formate double value into money
-  String _formatPrice(double price) {
-    return "₹${price.toStringAsFixed(2)}";
-  }
+  receipt.writeln('-------------------------------------------------------------');
+  receipt.writeln();
 
-  // formate a list of addons into a string of summery
-  String _formateAddons(List<Addon> addons) {
-    return addons
-        .map((addon) => "${addon.name} (${_formatPrice(addon.price)})")
-        .join(",");
-  }
+  // Calculate total price
+  double totalPrice = getTotalPrice();
+  double gst = totalPrice * 0.05; // 5% GST
+  double finalAmount = totalPrice + gst;
+
+  receipt.writeln("Total Items  : ${getTotalItemCount()}");
+  receipt.writeln("Total Price  : ${_formatPrice(totalPrice)}");
+  receipt.writeln("GST (5%)     : ${_formatPrice(gst)}");
+  receipt.writeln("------------------------------------");
+  receipt.writeln("Final Amount : ${_formatPrice(finalAmount)}");
+  receipt.writeln();
+  receipt.writeln("Delivered To : $deliveryAddress");
+
+  return receipt.toString();
+}
+
+// Format double value into money
+String _formatPrice(double price) {
+  return "₹${price.toStringAsFixed(2)}";
+}
+
+// Format a list of addons into a string summary
+String _formateAddons(List<Addon> addons) {
+  return addons
+      .map((addon) => "${addon.name} (${_formatPrice(addon.price)})")
+      .join(", ");
+}
+
 }
 
 

@@ -8,6 +8,7 @@ import 'package:food_delivery_app/models/restauarant.dart';
 import 'package:food_delivery_app/pages/delivery_progress_page.dart';
 import 'package:food_delivery_app/pages/payment_page.dart';
 import 'package:food_delivery_app/pages/home_page.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class CartPage extends StatelessWidget {
@@ -56,6 +57,10 @@ class CartPage extends StatelessWidget {
               icon: const Icon(Icons.delete),
             ),
           ],
+
+            leading : IconButton(onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
+        }, icon: Icon(Icons.arrow_back_ios,color: Theme.of(context).colorScheme.inversePrimary,)),
         ),
         body: Column(
           children: [
@@ -135,12 +140,14 @@ void _showPaymentDialog(BuildContext context) {
     context: context,
     builder: (context) => Theme(
       data: Theme.of(context).copyWith(
-        dialogTheme: DialogThemeData(backgroundColor: const Color.fromARGB(255, 233, 174, 91),), // Change background color
+        dialogTheme: const DialogTheme(
+          backgroundColor: Color.fromARGB(255, 233, 174, 91),
+        ),
       ),
       child: AlertDialog(
         title: const Text(
           "Select Payment Method",
-          style: TextStyle(color:Colors.white), 
+          style: TextStyle(color: Colors.white),
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -148,26 +155,20 @@ void _showPaymentDialog(BuildContext context) {
             ListTile(
               title: const Text(
                 "Cash on Delivery",
-                style: TextStyle(color: Colors.white), // Change text color
+                style: TextStyle(color: Colors.white),
               ),
-              leading: const Icon(Icons.money, color: Colors.black), // Change icon color
+              leading: const Icon(Icons.money, color: Colors.black),
               onTap: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        DeliveryProgressPage(paymentMethod: "Cash on Delivery"),
-                  ),
-                );
+                Navigator.pop(context); // Close dialog
+                showLottieAnimation(context, "Cash on Delivery");
               },
             ),
             ListTile(
               title: const Text(
                 "Credit/Debit Card",
-                style: TextStyle(color: Colors.white), // Change text color
+                style: TextStyle(color: Colors.white),
               ),
-              leading: const Icon(Icons.credit_card, color: Colors.black), // Change icon color
+              leading: const Icon(Icons.credit_card, color: Colors.black),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(
@@ -184,4 +185,43 @@ void _showPaymentDialog(BuildContext context) {
     ),
   );
 }
+void showLottieAnimation(BuildContext context, String paymentMethod) {
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (context) => Dialog(
+      backgroundColor: Colors.transparent,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Lottie.asset(
+            'assets/deli.json',
+            width: 400,
+            height: 400,
+            repeat: false,
+            animate: true,
+            onLoaded: (composition) {
+             
+              Future.delayed(composition.duration, () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DeliveryProgressPage(paymentMethod: paymentMethod),
+                  ),
+                );
+              });
+            },
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            "Processing your payment...",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
 }

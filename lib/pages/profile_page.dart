@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/components/my_button.dart' show MyButton;
 import 'package:food_delivery_app/models/restauarant.dart';
+import 'package:food_delivery_app/pages/home_page.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -95,6 +96,9 @@ class _ProfilePageState extends State<ProfilePage> {
         title: const Text("Profile",
             style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
         centerTitle: true,
+        leading : IconButton(onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
+        }, icon: Icon(Icons.arrow_back_ios,color: Theme.of(context).colorScheme.inversePrimary,)),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
