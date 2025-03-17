@@ -32,13 +32,22 @@ class MyReceiptPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                "Thank you for your Order!",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey),
-              ),
+              Row(
+                children: [
+                  const Text(
+                    "Thank you for your Order!",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey),
+                  ),
+                    IconButton(
+                  onPressed: () async {
+                    await _generateInvoice(context, receipt, paymentMethod);
+                  },
+                  icon: Icon(Icons.download)),
+                ],
+              ), 
               const SizedBox(height: 25),
               Text(
                 "Estimated delivery time: $formattedTime",
@@ -81,12 +90,7 @@ class MyReceiptPage extends StatelessWidget {
               const SizedBox(height: 25),
 
               // Print Invoice Button
-              TextButton(
-                  onPressed: () async {
-                    await _generateInvoice(context, receipt, paymentMethod);
-                  },
-                  child: Text("Get Invoice")),
-
+            
               const SizedBox(height: 25),
 
               // Close Button
@@ -112,123 +116,156 @@ class MyReceiptPage extends StatelessWidget {
   }
 
   // Function to check permission and save invoice PDF
- Future<void> _generateInvoice(BuildContext context, String receipt, String paymentMethod) async {
-  try {
-    final pdf = pw.Document();
-    final now = DateTime.now();
-    final formattedDate = "${now.day}/${now.month}/${now.year}";
+  Future<void> _generateInvoice(
+      BuildContext context, String receipt, String paymentMethod) async {
+    try {
+      final pdf = pw.Document();
+      final now = DateTime.now();
+      final formattedDate = "${now.day}/${now.month}/${now.year}";
 
-    pdf.addPage(
-      pw.Page(
-        margin: const pw.EdgeInsets.all(32),
-        build: (pw.Context context) {
-          return pw.Column(
-            crossAxisAlignment: pw.CrossAxisAlignment.start,
-            children: [
-              // Header with Branding
-              pw.Center(
-                child: pw.Column(
-                  children: [
-                    pw.Text("KD Serve", style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold, color: PdfColors.blue)),
-                    pw.Text("Food Delivery Invoice", style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold)),
-                  ],
-                ),
-              ),
-              pw.Divider(thickness: 2),
-              
-              // Invoice Details
-              pw.SizedBox(height: 10),
-              pw.Text("Invoice Date: $formattedDate", style: pw.TextStyle(fontSize: 14, color: PdfColors.grey700)),
-              pw.SizedBox(height: 10),
-              pw.Divider(),
-              
-              // Order Details Table
-              pw.Text("Order Summary", style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold)),
-              pw.SizedBox(height: 5),
-              pw.Table(
-                border: pw.TableBorder.all(width: 1, color: PdfColors.black),
-                columnWidths: {
-                  0: pw.FlexColumnWidth(3),
-                  1: pw.FlexColumnWidth(1),
-                },
-                children: [
-                  pw.TableRow(
-                    decoration: pw.BoxDecoration(color: PdfColors.grey300),
+      pdf.addPage(
+        pw.Page(
+          margin: const pw.EdgeInsets.all(32),
+          build: (pw.Context context) {
+            return pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              children: [
+                // Header with Branding
+                pw.Center(
+                  child: pw.Column(
                     children: [
-                      pw.Padding(padding: const pw.EdgeInsets.all(8), child: pw.Text("Item", style: pw.TextStyle(fontWeight: pw.FontWeight.bold))),
-                      pw.Padding(padding: const pw.EdgeInsets.all(8), child: pw.Text("Price", style: pw.TextStyle(fontWeight: pw.FontWeight.bold))),
+                      pw.Text("KD Serve",
+                          style: pw.TextStyle(
+                              fontSize: 24,
+                              fontWeight: pw.FontWeight.bold,
+                              color: PdfColors.blue)),
+                      pw.Text("Food Delivery Invoice",
+                          style: pw.TextStyle(
+                              fontSize: 18, fontWeight: pw.FontWeight.bold)),
                     ],
                   ),
-                  ...receipt.split("\n").map((line) {
-                    final parts = line.split(" - ");
-                    return pw.TableRow(
+                ),
+                pw.Divider(thickness: 2),
+
+                // Invoice Details
+                pw.SizedBox(height: 10),
+                pw.Text("Invoice Date: $formattedDate",
+                    style:
+                        pw.TextStyle(fontSize: 14, color: PdfColors.grey700)),
+                pw.SizedBox(height: 10),
+                pw.Divider(),
+
+                // Order Details Table
+                pw.Text("Order Summary",
+                    style: pw.TextStyle(
+                        fontSize: 16, fontWeight: pw.FontWeight.bold)),
+                pw.SizedBox(height: 5),
+                pw.Table(
+                  border: pw.TableBorder.all(width: 1, color: PdfColors.black),
+                  columnWidths: {
+                    0: pw.FlexColumnWidth(3),
+                    1: pw.FlexColumnWidth(1),
+                  },
+                  children: [
+                    pw.TableRow(
+                      decoration: pw.BoxDecoration(color: PdfColors.grey300),
                       children: [
-                        pw.Padding(padding: const pw.EdgeInsets.all(8), child: pw.Text(parts[0], style: pw.TextStyle(fontSize: 14))),
-                        pw.Padding(padding: const pw.EdgeInsets.all(8), child: pw.Text(parts.length > 1 ? parts[1] : "", style: pw.TextStyle(fontSize: 14))),
+                        pw.Padding(
+                            padding: const pw.EdgeInsets.all(8),
+                            child: pw.Text("Item",
+                                style: pw.TextStyle(
+                                    fontWeight: pw.FontWeight.bold))),
+                        pw.Padding(
+                            padding: const pw.EdgeInsets.all(8),
+                            child: pw.Text("Price",
+                                style: pw.TextStyle(
+                                    fontWeight: pw.FontWeight.bold))),
                       ],
-                    );
-                  }),
-                ],
-              ),
+                    ),
+                    ...receipt.split("\n").map((line) {
+                      final parts = line.split(" - ");
+                      return pw.TableRow(
+                        children: [
+                          pw.Padding(
+                              padding: const pw.EdgeInsets.all(8),
+                              child: pw.Text(parts[0],
+                                  style: pw.TextStyle(fontSize: 14))),
+                          pw.Padding(
+                              padding: const pw.EdgeInsets.all(8),
+                              child: pw.Text(parts.length > 1 ? parts[1] : "",
+                                  style: pw.TextStyle(fontSize: 14))),
+                        ],
+                      );
+                    }),
+                  ],
+                ),
 
-              pw.SizedBox(height: 10),
-              pw.Divider(),
-              
-              // Payment Method
-              pw.Text("Payment Method: ${paymentMethod.isNotEmpty ? paymentMethod : "Not Provided"}",
-                  style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold, color: PdfColors.blue)),
-              
-              pw.SizedBox(height: 20),
+                pw.SizedBox(height: 10),
+                pw.Divider(),
 
-              // Footer
-              pw.Center(
-                child: pw.Text("Thank you for ordering with KD Serve!", style: pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold, color: PdfColors.green700)),
-              ),
-            ],
-          );
-        },
-      ),
-    );
+                // Payment Method
+                pw.Text(
+                    "Payment Method: ${paymentMethod.isNotEmpty ? paymentMethod : "Not Provided"}",
+                    style: pw.TextStyle(
+                        fontSize: 16,
+                        fontWeight: pw.FontWeight.bold,
+                        color: PdfColors.blue)),
 
-    // Save the PDF
-    Directory directory = await getApplicationDocumentsDirectory();
-    final filePath = "${directory.path}/invoice.pdf";
-    final file = File(filePath);
-    await file.writeAsBytes(await pdf.save());
+                pw.SizedBox(height: 20),
 
-    // Show Dialog
-    _showInvoiceDialog(context, filePath);
-  } catch (e) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Failed to save invoice: ${e.toString()}")),
+                // Footer
+                pw.Center(
+                  child: pw.Text("Thank you for ordering with KD Serve!",
+                      style: pw.TextStyle(
+                          fontSize: 14,
+                          fontWeight: pw.FontWeight.bold,
+                          color: PdfColors.green700)),
+                ),
+              ],
+            );
+          },
+        ),
+      );
+
+      // Save the PDF
+      Directory directory = await getApplicationDocumentsDirectory();
+      final filePath = "${directory.path}/invoice.pdf";
+      final file = File(filePath);
+      await file.writeAsBytes(await pdf.save());
+
+      // Show Dialog
+      _showInvoiceDialog(context, filePath);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Failed to save invoice: ${e.toString()}")),
+      );
+    }
+  }
+
+  void _showInvoiceDialog(BuildContext context, String filePath) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Invoice Generated"),
+          content: const Text("Your invoice has been generated successfully."),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                OpenFile.open(filePath);
+              },
+              child: const Text("Open"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text("Close"),
+            ),
+          ],
+        );
+      },
     );
   }
-}
-void _showInvoiceDialog(BuildContext context, String filePath) {
-  showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        title: const Text("Invoice Generated"),
-        content: const Text("Your invoice has been generated successfully."),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              OpenFile.open(filePath);
-            },
-            child: const Text("Open"),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text("Close"),
-          ),
-        ],
-      );
-    },
-  );
-}
-
 }
