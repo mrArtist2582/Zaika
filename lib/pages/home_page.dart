@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage>
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool? isProfileCreated = prefs.getBool('isProfileCreated');
 
-    if (isProfileCreated == null || !isProfileCreated) {
+    if (!isProfileCreated!) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.pushReplacement(
           context,
@@ -66,6 +66,7 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       backgroundColor: Theme.of(context).colorScheme.surface,
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Theme.of(context).colorScheme.surface,

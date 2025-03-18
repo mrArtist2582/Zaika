@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
+import 'package:food_delivery_app/services/noti_service/noti_service.dart';
 import 'package:lottie/lottie.dart';
 import 'package:food_delivery_app/components/my_button.dart';
 import 'package:food_delivery_app/pages/delivery_progress_page.dart';
@@ -63,6 +64,10 @@ class _PaymentPageState extends State<PaymentPage> {
               onPressed: () {
                 Navigator.pop(context); // Close confirmation dialog
                 showLottieAnimation(); // Show animation and navigate
+                 NotiService().showNotification(
+                  title: "K4Serve",
+                  body: "Your Order has been Placed!"
+                );
               },
               child: const Text("Yes"),
             ),
@@ -106,6 +111,7 @@ class _PaymentPageState extends State<PaymentPage> {
         builder: (context) => const DeliveryProgressPage(paymentMethod: 'Credit Card',),
       ),
     );
+     
   });
 }
 

@@ -8,6 +8,7 @@ import 'package:food_delivery_app/models/restauarant.dart';
 import 'package:food_delivery_app/pages/delivery_progress_page.dart';
 import 'package:food_delivery_app/pages/payment_page.dart';
 import 'package:food_delivery_app/pages/home_page.dart';
+import 'package:food_delivery_app/services/noti_service/noti_service.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
@@ -159,6 +160,7 @@ void _showPaymentDialog(BuildContext context) {
               ),
               leading: const Icon(Icons.money, color: Colors.black),
               onTap: () {
+                
                 Navigator.pop(context); // Close dialog
                 showLottieAnimation(context, "Cash on Delivery");
               },
@@ -170,6 +172,7 @@ void _showPaymentDialog(BuildContext context) {
               ),
               leading: const Icon(Icons.credit_card, color: Colors.black),
               onTap: () {
+             
                 Navigator.pop(context);
                 Navigator.push(
                   context,
@@ -209,6 +212,10 @@ void showLottieAnimation(BuildContext context, String paymentMethod) {
                   MaterialPageRoute(
                     builder: (context) => DeliveryProgressPage(paymentMethod: paymentMethod),
                   ),
+                );
+                NotiService().showNotification(
+                  title: "K4Serve",
+                  body: "Your Order has been Placed!"
                 );
               });
             },

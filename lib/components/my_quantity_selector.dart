@@ -23,7 +23,7 @@ class MyQuantitySelector extends StatelessWidget {
         color: Theme.of(context).colorScheme.secondary,
         borderRadius: BorderRadius.circular(50),
       ),
-      padding: const  EdgeInsets.all(3),
+      padding: const  EdgeInsets.all(1),
       
       child: Row(
      mainAxisSize: MainAxisSize.min,

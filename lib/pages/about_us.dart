@@ -96,7 +96,7 @@ class AboutUs extends StatelessWidget {
               title: const Text("Anand, Gujarat"),
               onTap: _launchMap,
             ),
-           const SizedBox(height: 40,),
+           const SizedBox(height: 80,),
             Center(
               child: Text(
                 "Copyright © 2025 K4Serve. All Rights Reserved",

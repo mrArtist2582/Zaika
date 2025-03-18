@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:food_delivery_app/pages/about_us.dart';
 import 'package:food_delivery_app/pages/contact.dart';
 import 'package:food_delivery_app/services/auth/login_or_register.dart';
@@ -84,7 +85,8 @@ class SettingsPage extends StatelessWidget {
             },
             child: settingsContainer(context, "Contact"),
           ),
-
+          // Inside SettingsPage's Column widget
+        
           // Logout Container
           GestureDetector(
             onTap: () async {

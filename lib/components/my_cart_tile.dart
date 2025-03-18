@@ -17,7 +17,7 @@ class MyCartTile extends StatelessWidget {
           color:Theme.of(context).colorScheme.onBackground,
           borderRadius: BorderRadius.circular(12),
         ),
-        margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
         child: Column(
           children: [
             Row(
