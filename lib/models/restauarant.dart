@@ -483,7 +483,6 @@ class Restauarant extends ChangeNotifier {
   //  user Cart
   final List<CartItem> _cart = [];
 
-
   // delivery address
 
   String _deliveryAddress = '';
@@ -593,60 +592,53 @@ class Restauarant extends ChangeNotifier {
 
    */
 
-  // genrate receipt
+  // Generate receipt
   String displayCartReceipt() {
-  final receipt = StringBuffer();
-  receipt.writeln("Here your Receipt..");
-  receipt.writeln();
-
-  // Format the date to include up to seconds only
-  String formattedDate =
-      DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
-
-  receipt.writeln(formattedDate);
-  receipt.writeln();
-   Divider();
-
-  for (final cartItem in _cart) {
-    receipt.writeln(
-        '${cartItem.quantity} x ${cartItem.food.name} - ${_formatPrice(cartItem.food.price)}');
-    if (cartItem.selectedAddons.isNotEmpty) {
-      receipt.writeln("   Add-ons : ${_formateAddons(cartItem.selectedAddons)}");
-    }
+    final receipt = StringBuffer();
+    receipt.writeln("Here your Receipt..");
     receipt.writeln();
+
+    // Format the date to include up to seconds only
+    String formattedDate =
+        DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+
+    receipt.writeln(formattedDate);
+   receipt.writeln();
+    for (final cartItem in _cart) {
+      receipt.writeln(
+          '${cartItem.quantity} x ${cartItem.food.name} - ${_formatPrice(cartItem.food.price)}');
+      if (cartItem.selectedAddons.isNotEmpty) {
+        receipt
+            .writeln("   Add-ons : ${_formateAddons(cartItem.selectedAddons)}");
+      }
+    }
+
+    // Calculate total price
+    double totalPrice = getTotalPrice();
+    double gst = totalPrice * 0.05; // 5% GST
+    double deliveryCharge = 40.0; // Fixed delivery charge
+    double finalAmount = totalPrice + gst + deliveryCharge;
+
+    receipt.writeln("Total Items  :  ${getTotalItemCount()}");
+    receipt.writeln("Total Price  :  ${_formatPrice(totalPrice)}");
+    receipt.writeln("GST (5%)     :  ${_formatPrice(gst)}");
+    receipt.writeln("Delivery Fee :  ${_formatPrice(deliveryCharge)}");
+    receipt.writeln("Final Amount :  ${_formatPrice(finalAmount)}");
+    receipt.writeln();
+    receipt.writeln("Delivered To : $deliveryAddress");
+
+    return receipt.toString();
   }
 
- Divider();
-  receipt.writeln();
-
-  // Calculate total price
-  double totalPrice = getTotalPrice();
-  double gst = totalPrice * 0.05; // 5% GST
-  double finalAmount = totalPrice + gst;
-
-  receipt.writeln("Total Items  : ${getTotalItemCount()}");
-  receipt.writeln("Total Price  : ${_formatPrice(totalPrice)}");
-  receipt.writeln("GST (5%)     : ${_formatPrice(gst)}");
-  Divider();
-  receipt.writeln("Final Amount : ${_formatPrice(finalAmount)}");
-  receipt.writeln();
-  receipt.writeln("Delivered To : $deliveryAddress");
-
-  return receipt.toString();
-}
-
 // Format double value into money
-String _formatPrice(double price) {
-  return "Rs.${price.toStringAsFixed(2)}";
-}
+  String _formatPrice(double price) {
+    return "Rs.${price.toStringAsFixed(2)}";
+  }
 
 // Format a list of addons into a string summary
-String _formateAddons(List<Addon> addons) {
-  return addons
-      .map((addon) => "${addon.name} (${_formatPrice(addon.price)})")
-      .join(", ");
+  String _formateAddons(List<Addon> addons) {
+    return addons
+        .map((addon) => "${addon.name} (${_formatPrice(addon.price)})")
+        .join(", ");
+  }
 }
-
-}
-
-

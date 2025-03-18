@@ -17,4 +17,5 @@ class CartItem {
     selectedAddons.fold(0, (sum, addon) => sum + addon.price);
     return  (food.price + addonPrice) * quantity;
   }
+
 }
