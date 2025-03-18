@@ -53,13 +53,13 @@ class AboutUs extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              "Welcome to K4Serve!",
+              "Welcome to Zaika!",
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               textAlign: TextAlign.justify,
             ),
             const SizedBox(height: 10),
             const Text(
-              "    K4Serve is a modern food delivery platform committed to providing customers with a seamless and efficient way to enjoy their favorite meals. "
+              "    Zaika is a modern food delivery platform committed to providing customers with a seamless and efficient way to enjoy their favorite meals. "
               "With a user-friendly interface and a vast selection of cuisines, we bring the best restaurants to your doorstep, ensuring a hassle-free dining experience from the comfort of your home.",
               textAlign: TextAlign.justify,
             ),
@@ -71,7 +71,7 @@ class AboutUs extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             const Text(
-              "    Whether you're craving a quick snack, a hearty meal, or something new to try, K4Serve connects you with the best options available. "
+              "    Whether you're craving a quick snack, a hearty meal, or something new to try, Zaika connects you with the best options available. "
               "We strive to make food delivery convenient, reliable, and enjoyable for everyone, anytime and anywhere.",
               textAlign: TextAlign.justify,
             ),
@@ -99,7 +99,7 @@ class AboutUs extends StatelessWidget {
            const SizedBox(height: 80,),
             Center(
               child: Text(
-                "Copyright © 2025 K4Serve. All Rights Reserved",
+                "Copyright © 2025 Zaika. All Rights Reserved",
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,

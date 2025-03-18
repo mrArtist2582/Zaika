@@ -15,13 +15,13 @@ class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Colors.amber[600],
+      backgroundColor:Theme.of(context).colorScheme.surface,
       child: Column(
         children: [
           // App logo
           Padding(
             padding: const EdgeInsets.only(top: 100),
-            child:   Image.asset('assets/kd.png', height: 150, width: 150)
+            child:   Image.asset('assets/bgmain.png', height: 150, width: 150)
           ),
           Padding(
             padding: const EdgeInsets.all(25),

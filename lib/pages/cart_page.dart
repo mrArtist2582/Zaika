@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:food_delivery_app/components/my_button.dart';
 import 'package:food_delivery_app/components/my_cart_tile.dart';
 import 'package:food_delivery_app/models/restauarant.dart';
@@ -92,13 +91,18 @@ class _CartPageState extends State<CartPage> {
                       },
                     ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Text(
-                "Total Price: Rs ${totalPrice.toStringAsFixed(2)}",
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
-              ),
-            ),
+            totalPrice > 0 
+    ? Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Text(
+          "Total Price : Rs ${totalPrice.toStringAsFixed(2)}",
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.grey,
+          ),
+        ),
+      ):SizedBox(),
             MyButton(
               onTap: () {
                 if (userCart.isEmpty) {
@@ -191,7 +195,7 @@ class _CartPageState extends State<CartPage> {
     try {
       razorpay.open(options);
     } catch (e) {
-      Fluttertoast.showToast(msg: "Error: ${e.toString()}");
+     // Fluttertoast.showToast(msg: "Error: ${e.toString()}");
     }
   }
 

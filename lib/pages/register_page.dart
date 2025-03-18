@@ -90,7 +90,7 @@ class _RegisterPageState extends State<RegisterPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  'assets/kd.png',
+                  'assets/bgmain.png',
                   height: 150,
                   width: 150,
                 ),
