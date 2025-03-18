@@ -36,6 +36,7 @@
 
             <!-- Required for Flutter embedding -->
             <meta-data android:name="flutterEmbedding" android:value="2" />
+            <meta-data android:name="flutter.io.renderer" android:value="software"/>
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

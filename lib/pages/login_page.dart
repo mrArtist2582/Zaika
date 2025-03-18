@@ -93,11 +93,11 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/kd.png', height: 150, width: 150),
+              Image.asset('assets/bgmain.png', height: 150, width: 150),
               const SizedBox(height: 15),
               Center(
                 child: Text(
-                  'Welcome to K4-Serve...',
+                  'Welcome to Zaika...',
                   style: TextStyle(
                     fontSize: 16,
                     color: Theme.of(context).colorScheme.inversePrimary,

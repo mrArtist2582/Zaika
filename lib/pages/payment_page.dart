@@ -65,7 +65,7 @@ class _PaymentPageState extends State<PaymentPage> {
                 Navigator.pop(context); // Close confirmation dialog
                 showLottieAnimation(); // Show animation and navigate
                  NotiService().showNotification(
-                  title: "K4Serve",
+                  title: "Zaika",
                   body: "Your Order has been Placed!"
                 );
               },

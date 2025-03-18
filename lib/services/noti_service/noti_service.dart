@@ -64,12 +64,6 @@ class NotiService {
     );
   }
 
-  /*
-  Schedualing notification 
-   
-   - hour (0-23)
-   - minute (0-59) 
 
- */
 
 }
