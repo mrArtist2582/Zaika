@@ -231,7 +231,7 @@ Future<void> _generateInvoice(
 
               // Footer
               pw.Center(
-                child: pw.Text("Thank you for ordering with KD Serve!",
+                child: pw.Text("Thank you for ordering with Zaika!",
                     style: pw.TextStyle(
                         fontSize: 14,
                         fontWeight: pw.FontWeight.bold,

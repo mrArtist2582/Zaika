@@ -48,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
       );
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => ProfileCreationPage()),
       );
     } catch (e) {
       showDialog(

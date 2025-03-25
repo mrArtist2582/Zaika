@@ -16,13 +16,14 @@ class SettingsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
+        title: Text(
           "Settings",
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.grey[800],
             fontWeight: FontWeight.bold,
           ),
         ),
+        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
       body: Column(
         children: [

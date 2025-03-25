@@ -9,6 +9,7 @@ import 'package:food_delivery_app/services/noti_service/noti_service.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -176,28 +177,35 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  void startPayment(double amount, String deliveryAddress) {
+
+void startPayment(double amount, String deliveryAddress) async {
+  try {
+    // Fetch user details from SharedPreferences
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String userContact = prefs.getString('contact') ?? "9904225520";
+    String userEmail = prefs.getString('email') ?? "kashishdarji25@example.com";
+
     var options = {
-      'key': 'rzp_test_fWMbQfzsFEmZpy',
+      'key': 'rzp_test_3D36gu8FFcIbQp',
       'amount': (amount * 100).toInt(),
       'name': 'Zaika',
       'description': 'Food Order Payment',
-      'timeout': 60,
+      'timeout': 120,
       'prefill': {
-        'contact': '9904225520',
-        'email': 'kashishdarji25@example.com'
+        'contact': userContact,
+        'email': userEmail,
       },
       'notes': {
         'Delivery Address': deliveryAddress,
       }
     };
 
-    try {
-      razorpay.open(options);
-    } catch (e) {
-     // Fluttertoast.showToast(msg: "Error: ${e.toString()}");
-    }
+    razorpay.open(options);
+  } catch (e) {
+   // Fluttertoast.showToast(msg: "Payment failed: ${e.toString()}");
   }
+}
+
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
    // Fluttertoast.showToast(msg: "Payment Success: ${response.paymentId}");
@@ -207,6 +215,7 @@ class _CartPageState extends State<CartPage> {
         builder: (context) => DeliveryProgressPage(paymentMethod: "RazorPay"),
       ),
     );
+    NotiService().showNotification(title: "Zaika", body: "Your Order has been Placed!");
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
