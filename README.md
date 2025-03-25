@@ -14,7 +14,9 @@ Secure online payments with Razorpay
 
 Order history tracking
 
-User profile management : ![IMG-20250324-WA0012](https://github.com/user-attachments/assets/6275dfb7-2be5-4123-b786-168fecd541b5)
+User profile management : 
+
+   ![IMG-20250324-WA0012](https://github.com/user-attachments/assets/6275dfb7-2be5-4123-b786-168fecd541b5)
 
    ![IMG-20250325-WA0020](https://github.com/user-attachments/assets/963232e1-73dd-47fa-8386-cb87363688c6)
 
