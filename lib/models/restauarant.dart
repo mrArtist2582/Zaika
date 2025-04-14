@@ -13,7 +13,7 @@ class Restauarant extends ChangeNotifier {
 
     //VEG burger
     Food(
-      name: "Veg Burger",
+      name: "Veg Burger", 
       description:
           "A wholesome and flavorful vegetarian burger featuring a crisp veggie patty made from fresh vegetables.",
       imagePath: "lib/images/Burger/veg_burger.png",
