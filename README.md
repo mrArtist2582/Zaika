@@ -14,8 +14,23 @@ Secure online payments with Razorpay
 
 Order history tracking
 
+<<<<<<< HEAD
 User profile management :
    
+=======
+User profile management : 
+
+   ![IMG-20250324-WA0012](https://github.com/user-attachments/assets/6275dfb7-2be5-4123-b786-168fecd541b5)
+
+   ![IMG-20250325-WA0020](https://github.com/user-attachments/assets/963232e1-73dd-47fa-8386-cb87363688c6)
+
+   ![IMG-20250325-WA0015](https://github.com/user-attachments/assets/0fb7a317-3e81-476b-b382-c2052af757a6)
+
+   ![IMG-20250325-WA0025](https://github.com/user-attachments/assets/844cdcb7-ca8f-433b-af15-fed64b1f6e7b)
+
+
+
+>>>>>>> 7d8dcfe0d71b268deef1ac582023ef06e61c4787
  
 Technologies Used
 
@@ -75,4 +90,8 @@ This project is licensed under the MIT License. See LICENSE for details.
 
 Contact
 
+<<<<<<< HEAD
 For queries, reach out at kashishdarji25@example.com.
+=======
+For queries, reach out at kashishdarji25@example.com.
+>>>>>>> 7d8dcfe0d71b268deef1ac582023ef06e61c4787
