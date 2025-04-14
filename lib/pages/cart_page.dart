@@ -145,7 +145,7 @@ class _CartPageState extends State<CartPage> {
       context: context,
       builder: (context) => Theme(
         data: Theme.of(context).copyWith(
-          dialogTheme: const DialogTheme(
+          dialogTheme: const DialogThemeData(
             backgroundColor: Color.fromARGB(255, 233, 174, 91),
           ),
         ),
