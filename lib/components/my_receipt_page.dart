@@ -1,14 +1,16 @@
 import 'dart:io';
-import 'package:path_provider/path_provider.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:provider/provider.dart';
+
 import 'package:food_delivery_app/components/my_button.dart';
 import 'package:food_delivery_app/models/restauarant.dart';
 import 'package:food_delivery_app/pages/home_page.dart';
-import 'package:provider/provider.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
-import 'package:open_file/open_file.dart';
 
 class MyReceiptPage extends StatelessWidget {
   final String paymentMethod;
