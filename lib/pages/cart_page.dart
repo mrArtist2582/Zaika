@@ -186,13 +186,13 @@
       String userEmail = prefs.getString('email') ?? "kashishdarji25@example.com";
 
       var options = {
-        'key': 'rzp_test_3D36gu8FFcIbQp',
+        'key': 'rzp_test_NHBdhCepaAeqho',
         'amount': (amount * 100).toInt(),
         'name': 'Zaika',
         'description': 'Food Order Payment',
         'timeout': 120,
         'prefill': {
-          'contact': userContact,
+          'contact': userContact, 
           'email': userEmail,
         },
         'notes': {

@@ -17,7 +17,7 @@
    NotiService().initNotification();
     runApp(const AppRoot());
   }
-
+  
   class AppRoot extends StatelessWidget {
     const AppRoot({super.key});
 
