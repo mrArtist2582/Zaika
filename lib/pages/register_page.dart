@@ -13,10 +13,12 @@ class RegisterPage extends StatefulWidget {
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderStateMixin {
+class _RegisterPageState extends State<RegisterPage>
+    with SingleTickerProviderStateMixin {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
   final AuthService _authService = AuthService();
 
   bool _isPasswordVisible = false;
@@ -30,8 +32,10 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
   void initState() {
     super.initState();
     checkUserStatus();
-    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 1000));
-    _fadeIn = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));
+    _controller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 1000));
+    _fadeIn = Tween<double>(begin: 0, end: 1)
+        .animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));
     _controller.forward();
   }
 
@@ -39,7 +43,8 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
     final user = _authService.getCurrentUser();
     if (user != null) {
       Future.delayed(Duration.zero, () {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       });
     }
   }
@@ -75,7 +80,11 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
         builder: (context) => AlertDialog(
           title: const Text("Registration Failed"),
           content: Text(e.toString()),
-          actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text("OK"))],
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("OK"))
+          ],
         ),
       );
     } finally {
@@ -98,13 +107,15 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
                 children: [
                   Image.asset('assets/bgmain.png', height: 120),
                   const SizedBox(height: 10),
-                  Text('Create your Zaika account', style: Theme.of(context).textTheme.titleLarge),
+                  Text('Create your Zaika account',
+                      style: Theme.of(context).textTheme.titleLarge),
                   const SizedBox(height: 25),
 
                   // Card UI
                   Card(
                     elevation: 5,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
                     child: Padding(
                       padding: const EdgeInsets.all(20),
                       child: Column(
@@ -115,29 +126,36 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
                             obsecureText: false,
                           ),
                           const SizedBox(height: 15),
-                          TextField(
+                          MyTextField(
                             controller: passwordController,
-                            obscureText: !_isPasswordVisible,
-                            decoration: InputDecoration(
-                              hintText: "Password",
-                              suffixIcon: IconButton(
-                                icon: Icon(_isPasswordVisible ? Icons.visibility : Icons.visibility_off),
-                                onPressed: () => setState(() => _isPasswordVisible = !_isPasswordVisible),
+                            hintText: "Password",
+                            obsecureText: !_isPasswordVisible,
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _isPasswordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
                               ),
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                              onPressed: () => setState(() {
+                                _isPasswordVisible = !_isPasswordVisible;
+                              }),
                             ),
                           ),
                           const SizedBox(height: 15),
-                          TextField(
+                          MyTextField(
                             controller: confirmPasswordController,
-                            obscureText: !_isConfirmPasswordVisible,
-                            decoration: InputDecoration(
-                              hintText: "Confirm Password",
-                              suffixIcon: IconButton(
-                                icon: Icon(_isConfirmPasswordVisible ? Icons.visibility : Icons.visibility_off),
-                                onPressed: () => setState(() => _isConfirmPasswordVisible = !_isConfirmPasswordVisible),
+                            hintText: "Confirm Password",
+                            obsecureText: !_isConfirmPasswordVisible,
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _isConfirmPasswordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
                               ),
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                              onPressed: () => setState(() {
+                                _isConfirmPasswordVisible =
+                                    !_isConfirmPasswordVisible;
+                              }),
                             ),
                           ),
                           const SizedBox(height: 20),
@@ -154,10 +172,14 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Already have an account?', style: Theme.of(context).textTheme.bodyMedium),
+                      Text('Already have an account?',
+                          style: Theme.of(context).textTheme.bodyMedium),
                       GestureDetector(
                         onTap: widget.onTap,
-                        child: Text(' Login now...', style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary)),
+                        child: Text(' Login now...',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.primary)),
                       ),
                     ],
                   ),
