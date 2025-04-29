@@ -9,9 +9,6 @@ class AuthService {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
  
 
-  final googleSignIn = GoogleSignIn(
-  clientId: '419173628101-hor883tcfep3ik3gb0bm0gt133qavips.apps.googleusercontent.com',
-);
 
   
   // 🔹 Sign in with Google
