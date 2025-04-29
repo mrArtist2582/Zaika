@@ -1,11 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+// ignore: unused_import
+import 'package:google_sign_in_web/google_sign_in_web.dart';
 
 class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+ 
 
+  final googleSignIn = GoogleSignIn(
+  clientId: '419173628101-hor883tcfep3ik3gb0bm0gt133qavips.apps.googleusercontent.com',
+);
+
+  
   // 🔹 Sign in with Google
   Future<UserCredential?> loginWithGoogle() async {
     try {
@@ -95,4 +103,13 @@ class AuthService {
     };
     return errorMessages[errorCode] ?? 'Authentication failed. Please try again.';
   }
+
+  Future<void> signInWithGoogleWeb() async {
+  try {
+    GoogleAuthProvider authProvider = GoogleAuthProvider();
+    await FirebaseAuth.instance.signInWithPopup(authProvider);
+  } catch (e) {
+    if (kDebugMode) print("Google Sign-In error: $e");
+  }
+}
 }

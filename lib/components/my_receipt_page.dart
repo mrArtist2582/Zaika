@@ -11,6 +11,10 @@ import 'package:provider/provider.dart';
 import 'package:food_delivery_app/components/my_button.dart';
 import 'package:food_delivery_app/models/restauarant.dart';
 import 'package:food_delivery_app/pages/home_page.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'dart:typed_data';
+import 'dart:html' as html; 
+
 
 class MyReceiptPage extends StatelessWidget {
   final String paymentMethod;
@@ -130,136 +134,83 @@ Future<void> _generateInvoice(
           return pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.start,
             children: [
-              // Header with Branding
               pw.Center(
                 child: pw.Column(
                   children: [
-                    pw.Text("Zaika",
-                        style: pw.TextStyle(
-                            fontSize: 26,
-                            fontWeight: pw.FontWeight.bold,
-                            color: PdfColors.blue)),
-                    pw.Text("Food Delivery Invoice",
-                        style: pw.TextStyle(
-                            fontSize: 18, fontWeight: pw.FontWeight.bold)),
+                    pw.Text("Zaika", style: pw.TextStyle(fontSize: 26, fontWeight: pw.FontWeight.bold, color: PdfColors.blue)),
+                    pw.Text("Food Delivery Invoice", style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold)),
                   ],
                 ),
               ),
-
               pw.SizedBox(height: 15),
-
-              // Invoice Details
-              pw.Text("Invoice Date: $formattedDate",
-                  style: pw.TextStyle(fontSize: 14, color: PdfColors.grey700)),
-
+              pw.Text("Invoice Date: $formattedDate", style: pw.TextStyle(fontSize: 14, color: PdfColors.grey700)),
               pw.SizedBox(height: 15),
-
-              // Order Summary Section
-              pw.Text("Order Summary",
-                  style: pw.TextStyle(
-                      fontSize: 18, fontWeight: pw.FontWeight.bold)),
+              pw.Text("Order Summary", style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold)),
               pw.SizedBox(height: 5),
-
               ...receipt.split("\n").where((line) => line.contains(" - ")).map((line) {
                 final parts = line.split(" - ");
                 final itemName = parts[0];
                 final itemPrice = parts.length > 1 ? parts[1] : "";
-
-                return pw.Container(
-                  padding: const pw.EdgeInsets.symmetric(vertical: 5),
-                  child: pw.Row(
-                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                    children: [
-                      pw.Text(itemName, style: pw.TextStyle(fontSize: 14)),
-                      pw.Text(itemPrice,
-                          style: pw.TextStyle(
-                              fontSize: 14, fontWeight: pw.FontWeight.bold)),
-                    ],
-                  ),
+                return pw.Row(
+                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                  children: [
+                    pw.Text(itemName, style: pw.TextStyle(fontSize: 14)),
+                    pw.Text(itemPrice, style: pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold)),
+                  ],
                 );
               }),
-
-             
-
-              // Summary Section
-              pw.Text(
-                "Summary",
-                style: pw.TextStyle(
-                    fontSize: 18, fontWeight: pw.FontWeight.bold),
-              ),
-
+              pw.SizedBox(height: 10),
+              pw.Text("Summary", style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold)),
               pw.SizedBox(height: 5),
-
               ...receipt.split("\n").where((line) =>
-                  line.contains("Total Items") ||
-                  line.contains("Total Price") ||
-                  line.contains("GST") ||
-                  line.contains("Delivery Fee") ||
-                  line.contains("Final Amount")).map((line) {
+                line.contains("Total Items") ||
+                line.contains("Total Price") ||
+                line.contains("GST") ||
+                line.contains("Delivery Fee") ||
+                line.contains("Final Amount")).map((line) {
                 final parts = line.split(":");
                 return pw.Row(
                   mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                   children: [
-                    pw.Text(parts[0].trim(),
-                        style: pw.TextStyle(fontSize: 14)),
-                    pw.Text(parts.length > 1 ? parts[1].trim() : "",
-                        style: pw.TextStyle(
-                            fontSize: 14, fontWeight: pw.FontWeight.bold)),
+                    pw.Text(parts[0].trim(), style: pw.TextStyle(fontSize: 14)),
+                    pw.Text(parts.length > 1 ? parts[1].trim() : "", style: pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold)),
                   ],
                 );
               }),
-
               pw.SizedBox(height: 15),
-
-              // Payment Method
-              pw.Text(
-                "Payment Method: ${paymentMethod.isNotEmpty ? paymentMethod : "Not Provided"}",
-                style: pw.TextStyle(
-                    fontSize: 16,
-                    fontWeight: pw.FontWeight.bold,
-                    color: PdfColors.blue),
-              ),
-
+              pw.Text("Payment Method: ${paymentMethod.isNotEmpty ? paymentMethod : "Not Provided"}", style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold, color: PdfColors.blue)),
               pw.SizedBox(height: 15),
-
-              // Delivery Address
               if (receipt.contains("Delivered To"))
-                pw.Text(
-                  "Delivered To: ${receipt.split("Delivered To : ").last}",
-                  style: pw.TextStyle(fontSize: 14, color: PdfColors.grey700),
-                ),
-
+                pw.Text("Delivered To: ${receipt.split("Delivered To : ").last}", style: pw.TextStyle(fontSize: 14, color: PdfColors.grey700)),
               pw.SizedBox(height: 25),
-
-              // Footer
-              pw.Center(
-                child: pw.Text("Thank you for ordering with Zaika!",
-                    style: pw.TextStyle(
-                        fontSize: 14,
-                        fontWeight: pw.FontWeight.bold,
-                        color: PdfColors.green700)),
-              ),
+              pw.Center(child: pw.Text("Thank you for ordering with Zaika!", style: pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold, color: PdfColors.green700))),
             ],
           );
         },
       ),
     );
-       // Get storage directory
-    final Directory directory = await getApplicationDocumentsDirectory();
-    final String filePath = "${directory.path}/invoice_${now.millisecondsSinceEpoch}.pdf";
-    
-    // Save PDF file
-    final File file = File(filePath);
-    await file.writeAsBytes(await pdf.save());
- // Show success dialog
-    _showInvoiceDialog(context, filePath);
-   
-    
-   
-  } catch (e) {
-    if (kDebugMode) {
-      print("Error generating invoice: $e");
+
+    final Uint8List pdfBytes = await pdf.save();
+
+    if (kIsWeb) {
+      // Web download logic
+      final blob = html.Blob([pdfBytes]);
+      final url = html.Url.createObjectUrlFromBlob(blob);
+      // ignore: unused_local_variable
+      final anchor = html.AnchorElement(href: url)
+        ..setAttribute("download", "invoice.pdf")
+        ..click();
+      html.Url.revokeObjectUrl(url);
+    } else {
+      // Mobile or desktop logic
+      final Directory directory = await getApplicationDocumentsDirectory();
+      final String filePath = "${directory.path}/invoice_${now.millisecondsSinceEpoch}.pdf";
+      final File file = File(filePath);
+      await file.writeAsBytes(pdfBytes);
+      _showInvoiceDialog(context, filePath);
     }
+  } catch (e) {
+    print("Error generating invoice: $e");
   }
 }
 
